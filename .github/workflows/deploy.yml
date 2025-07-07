@@ -6,9 +6,12 @@ jobs:
   first_job:
     runs-on: ubuntu-latest
 
+    env:
+      NAME: OSCAR MORENO
+
     steps:
       - name: Hola mundo
-        run: echo "Hola mundo desde el primer job"
+        run: echo "Hola mundo desde el primer job ${{ env.NAME }}"
 
   second_job:
     if: ${{ github.ref == 'refs/heads/main' }}
