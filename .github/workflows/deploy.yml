@@ -13,6 +13,16 @@ jobs:
       - name: Hola mundo
         run: echo "Hola mundo desde el primer job ${{ env.NAME }}"
 
+      - name: Working dir
+        run: ls -al
+
+      - name: Action
+        uses: actions/checkout@v4
+
+      - name: Working dir after action
+        run: ls -al
+
+
   second_job:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: first_job
