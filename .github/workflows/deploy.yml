@@ -5,38 +5,14 @@ on: push
 jobs:
   first_job:
     runs-on: ubuntu-latest
-
-    outputs:
-      salida: ${{ steps.step3.outputs.my_variable }}
-
-    env:
-      NAME: OSCAR MORENO
-
+    
     steps:
-      - name: Hola mundo
-        run: echo "Hola mundo desde el primer job ${{ env.NAME }}"
-
-      - name: Working dir
-        run: ls -al
-
-      - name: Action
-        uses: actions/checkout@v4
-
-      - name: Working dir after action
-        id: step3
-        run: echo "my_variable=Hola oscar" >> $GITHUB_OUTPUT
+      - name: Generar Archivo
+        run: 
+          echo "Archivo prueba, hola" >> test.log
       
-      - name: Show variable
-        run: echo "The variable is ${{ steps.step3.outputs.my_variable }}"
-
-  second_job:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    needs: first_job
-    runs-on: ubuntu-latest
-
-    env:
-      SALIDA: ${{needs.first_job.outputs.salida}}
-
-    steps:
-      - name: Hola mundo
-        run: echo "$SALIDA desde el segundo job"
+      - name: Subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifact
+          path: test.log
