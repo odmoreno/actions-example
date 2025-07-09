@@ -1,0 +1,15 @@
+name: Deploy to server
+
+on: push
+
+jobs:
+  first_job:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        message: ["Hello", "Oscar moreno", "Github actions tutorial"]
+
+    steps:
+      - name: Mostrar mensaje
+        run: echo "${{ matrix.message }}"
