@@ -5,7 +5,7 @@ on: push
 jobs:
   first_job:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Generar Archivo
         run: 
@@ -16,3 +16,19 @@ jobs:
         with:
           name: test-artifact
           path: test.log
+
+  segundo_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar artefacto
+        uses: actions/download-artifact@v4
+        with:
+          name: test-artifact
+
+      - name: Mostrar contenido del archivo
+        run: cat test.log
+
+      - name: Subir a servidor remoto
+        run: echo "Subiendo a servidor remoto"
+        # Aquí podrías agregar el comando para subir el archivo a tu servidor remoto
