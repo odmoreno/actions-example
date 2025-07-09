@@ -20,8 +20,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Working dir after action
-        run: ls -al
-
+        id: step3
+        run: echo "my_variable=Hola oscar" >> $GITHUB_OUTPUT
+      
+      - name: Show variable
+        run: echo "The variable is ${{ steps.step3.outputs.my_variable }}"
 
   second_job:
     if: ${{ github.ref == 'refs/heads/main' }}
