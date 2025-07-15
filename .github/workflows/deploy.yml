@@ -30,6 +30,11 @@ jobs:
 
       - name: Build page (artefacto)
         run: npm run build
+
+      - name: Upload artefact
+        uses: actions/upload-artifact@v4
+        with:
+          path: public/
   
   deploy:
     runs-on: ubuntu-latest
