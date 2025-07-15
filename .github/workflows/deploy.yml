@@ -9,6 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [18, 20]
+
     steps:
 
       - name: Print variable
@@ -32,6 +37,7 @@ jobs:
         run: npm run build
 
       - name: Upload artefact
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node == '18'}}
         uses: actions/upload-artifact@v4
         with:
           path: public/
@@ -52,3 +58,17 @@ jobs:
       - name: Deploy
         id: deployment-pages
         uses: actions/deploy-pages@v4
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+
+    steps:
+      - name: NOtify to slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK }}
